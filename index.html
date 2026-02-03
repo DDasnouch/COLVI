@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COLVI - Определи свой цветотип</title>
+    <link rel="icon" type="image/png" href="https://img.icons8.com/color/96/000000/color-palette.png">
+    
+    <!-- Шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- ВСЕ СТИЛИ ВНУТРИ ФАЙЛА -->
+    <style>
+        /* ЦВЕТА ПО ТЗ */
+        :root {
+            --gray-light: #f5f5f5;
+            --gray-medium: #e0e0e0;
+            --gray-dark: #8a8a8a;
+            --black: #222222;
+            --white: #ffffff;
+            --pink: #ff6b8b;
+            --pink-dark: #e05573;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* ШАПКА */
+        header {
+            background-color: var(--gray-light);
+            padding: 20px 0;
+            border-bottom: 1px solid var(--gray-medium);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 32px;
+            color: var(--black);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+        }
+        
+        .logo:hover {
+            color: var(--pink);
+        }
+        
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+        
+        nav a {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--black);
+            text-decoration: none;
+            padding: 8px 0;
+            position: relative;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--pink);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--pink);
+            transition: width 0.3s;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        nav a.active {
+            color: var(--pink);
+        }
+        
+        nav a.active::after {
+            width: 100%;
+        }
+        
+        /* ГЛАВНЫЙ БАННЕР */
+        .hero {
+            padding: 120px 0 80px;
+            background: linear-gradient(135deg, var(--gray-light) 0%, var(--white) 100%);
+            text-align: center;
+            border-bottom: 1px solid var(--gray-medium);
+        }
+        
+        .hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 72px;
+            color: var(--black);
+            line-height: 1.1;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .hero-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 24px;
+            color: var(--gray-dark);
+            margin-bottom: 50px;
+            letter-spacing: 1px;
+        }
+        
+        /* КНОПКИ */
+        .btn {
+            display: inline-block;
+            padding: 18px 45px;
+            background-color: var(--pink);
+            color: var(--white);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--pink-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 107, 139, 0.2);
+        }
+        
+        /* ОБЩИЕ ЗАГОЛОВКИ */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--black);
+            line-height: 1.3;
+        }
+        
+        h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        h3 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+        
+        /* СЕКЦИИ */
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 36px;
+            color: var(--black);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        /* СЕТКА ЦВЕТОТИПОВ */
+        .color-types {
+            background-color: var(--gray-light);
+        }
+        
+        .types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .type-card {
+            background-color: var(--white);
+            padding: 40px 30px;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid var(--gray-medium);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .type-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .type-name {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--black);
+            margin-bottom: 15px;
+        }
+        
+        .type-description {
+            color: var(--gray-dark);
+            margin-bottom: 20px;
+        }
+        
+        .type-colors {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .color-dot {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-block;
+            border: 2px solid var(--white);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        /* ШАГИ РАБОТЫ */
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .step {
+            flex: 1;
+            text-align: center;
+            padding: 30px;
+            background-color: var(--white);
+            border-radius: 10px;
+            border: 1px solid var(--gray-medium);
+            transition: transform 0.3s;
+        }
+        
+        .step:hover {
+            transform: translateY(-5px);
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background-color: var(--pink);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+            margin: 0 auto 20px;
+        }
+        
+        .step-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--black);
+        }
+        
+        /* Текст внутри шагов - исправлен цвет */
+        .step p {
+            color: var(--black);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        /* ПРЕИМУЩЕСТВА */
+        .benefits {
+            background-color: var(--gray-light);
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .benefit {
+            background-color: var(--white);
+            padding: 40px 30px;
+            border-radius: 10px;
+            border: 1px solid var(--gray-medium);
+            transition: transform 0.3s;
+        }
+        
+        .benefit:hover {
+            transform: translateY(-5px);
+        }
+        
+        .benefit-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--black);
+        }
+        
+        /* Текст внутри преимуществ - исправлен цвет */
+        .benefit p {
+            color: var(--black);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        /* ОБЩИЙ ТЕКСТ ПАРАГРАФОВ */
+        p {
+            color: var(--black);
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        /* ФУТЕР */
+        footer {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 28px;
+            text-transform: uppercase;
+            color: var(--white);
+            text-decoration: none;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--pink);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            color: var(--gray-dark);
+        }
+        
+        /* АДАПТИВНОСТЬ */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 48px;
+            }
+            
+            .hero-subtitle {
+                font-size: 20px;
+            }
+            
+            .steps {
+                flex-direction: column;
+            }
+            
+            .section-title {
+                font-size: 32px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+                text-align: center;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .type-card {
+                padding: 30px 20px;
+            }
+            
+            .step {
+                padding: 25px 20px;
+            }
+            
+            .benefit {
+                padding: 30px 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero-subtitle {
+                font-size: 18px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+            
+            nav a {
+                font-size: 14px;
+                padding: 6px 12px;
+            }
+            
+            .btn {
+                padding: 15px 30px;
+                font-size: 16px;
+            }
+        }
+        
+        /* АНИМАЦИИ */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- ШАПКА -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">COLVI</a>
+                <nav>
+                    <a href="index.html" class="active">Главная</a>
+                    <a href="test-instructions.html">Перед тестом</a>
+                    <a href="test.html">Тест</a>
+                    <a href="colors.html">Цвета</a>
+                    <a href="looks.html">Образы</a>
+                    <a href="about.html">О нас</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- ГЛАВНЫЙ БАННЕР -->
+    <section class="hero">
+        <div class="container">
+            <h1>GLOW UP<br>В каждом оттенке</h1>
+            <p class="hero-subtitle">Определи свой цветотип и подбери идеальные цвета</p>
+            <a href="test.html" class="btn">ПРОЙТИ ТЕСТ</a>
+        </div>
+    </section>
+
+    <!-- ЧТО ТАКОЕ ЦВЕТОТИП -->
+    <section class="section color-types">
+        <div class="container">
+            <h2 class="section-title">Что такое цветотип?</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 40px; font-size: 18px; color: var(--black);">
+                Цветотип — это система определения наиболее подходящих вам цветов на основе природных данных: 
+                тона кожи, цвета волос и глаз. Правильно подобранные цвета подчеркивают естественную красоту, 
+                делают лицо свежим и сияющим.
+            </p>
+            
+            <div class="types-grid">
+                <div class="type-card animate-on-scroll">
+                    <h3 class="type-name">Весна</h3>
+                    <p class="type-description" style="color: var(--black);">Теплый, светлый, яркий тип</p>
+                    <div class="type-colors">
+                        <div class="color-dot" style="background-color: #FFCC80;"></div>
+                        <div class="color-dot" style="background-color: #FFB74D;"></div>
+                        <div class="color-dot" style="background-color: #FF9800;"></div>
+                    </div>
+                </div>
+                
+                <div class="type-card animate-on-scroll">
+                    <h3 class="type-name">Лето</h3>
+                    <p class="type-description" style="color: var(--black);">Холодный, светлый, приглушенный</p>
+                    <div class="type-colors">
+                        <div class="color-dot" style="background-color: #81D4FA;"></div>
+                        <div class="color-dot" style="background-color: #4FC3F7;"></div>
+                        <div class="color-dot" style="background-color: #2196F3;"></div>
+                    </div>
+                </div>
+                
+                <div class="type-card animate-on-scroll">
+                    <h3 class="type-name">Осень</h3>
+                    <p class="type-description" style="color: var(--black);">Теплый, насыщенный, глубокий</p>
+                    <div class="type-colors">
+                        <div class="color-dot" style="background-color: #A1887F;"></div>
+                        <div class="color-dot" style="background-color: #8D6E63;"></div>
+                        <div class="color-dot" style="background-color: #795548;"></div>
+                    </div>
+                </div>
+                
+                <div class="type-card animate-on-scroll">
+                    <h3 class="type-name">Зима</h3>
+                    <p class="type-description" style="color: var(--black);">Холодный, контрастный, яркий</p>
+                    <div class="type-colors">
+                        <div class="color-dot" style="background-color: #7986CB;"></div>
+                        <div class="color-dot" style="background-color: #5C6BC0;"></div>
+                        <div class="color-dot" style="background-color: #3F51B5;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- КАК ЭТО РАБОТАЕТ -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Как это работает?</h2>
+            <div class="steps">
+                <div class="step animate-on-scroll">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Пройдите тест</h3>
+                    <p><strong>15 детальных вопросов</strong> помогут точно определить ваши природные характеристики. Тест учитывает цвет кожи, волос, глаз и реакцию на солнце.</p>
+                </div>
+                
+                <div class="step animate-on-scroll">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Узнайте свой тип</h3>
+                    <p>Получите точное определение вашего <strong>цветотипа по временам года</strong>: Весна, Лето, Осень или Зима. Узнайте, какие цвета подчеркивают вашу естественную красоту.</p>
+                </div>
+                
+                <div class="step animate-on-scroll">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Применяйте в жизни</h3>
+                    <p>Используйте полученные знания при выборе <strong>одежды, макияжа и аксессуаров</strong>. Создавайте гармоничные образы, которые подчеркивают вашу индивидуальность.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ПРЕИМУЩЕСТВА -->
+    <section class="section benefits">
+        <div class="container">
+            <h2 class="section-title">Почему это важно?</h2>
+            <div class="benefits-grid">
+                <div class="benefit animate-on-scroll">
+                    <h3 class="benefit-title">Экономия времени</h3>
+                    <p>Больше не тратьте время на бесконечные примерки. Вы точно знаете, какие цвета вам подходят, и можете уверенно выбирать одежду и косметику.</p>
+                </div>
+                
+                <div class="benefit animate-on-scroll">
+                    <h3 class="benefit-title">Экономия денег</h3>
+                    <p>Прекратите покупать вещи, которые не идут. Инвестируйте только в ту одежду и косметику, которая действительно подчеркивает вашу красоту.</p>
+                </div>
+                
+                <div class="benefit animate-on-scroll">
+                    <h3 class="benefit-title">Уверенность в себе</h3>
+                    <p>Когда вы носите свои цвета, вы выглядите свежее, моложе и привлекательнее. Это добавляет уверенности в себе и улучшает настроение.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ФУТЕР -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <a href="index.html" class="footer-logo">COLVI</a>
+                <div class="footer-links">
+                    <a href="index.html">Главная</a>
+                    <a href="test.html">Тест</a>
+                    <a href="looks.html">Образы</a>
+                    <a href="colors.html">Цвета</a>
+                    <a href="about.html">Контакты</a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 COLVI. Все права защищены.</p>
+                <p style="margin-top: 10px;">Сайт о цветотипах внешности</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript ВНУТРИ ФАЙЛА -->
+    <script>
+        // ОБЩИЙ СКРИПТ ДЛЯ ГЛАВНОЙ СТРАНИЦЫ
+        
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Подсветка активной ссылки в навигации
+            highlightActiveNavLink();
+            
+            // Анимация появления элементов при скролле
+            initScrollAnimations();
+            
+            // Плавная прокрутка для всех внутренних ссылок
+            initSmoothScroll();
+            
+            // Анимация кнопок
+            initButtonAnimations();
+        });
+        
+        // Подсветка активной ссылки в навигации
+        function highlightActiveNavLink() {
+            const currentPage = window.location.pathname.split('/').pop();
+            document.querySelectorAll('nav a').forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+        }
+        
+        // Анимация появления элементов при скролле
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            // Наблюдаем за элементами с классами для анимации
+            document.querySelectorAll('.animate-on-scroll').forEach(element => {
+                observer.observe(element);
+            });
+        }
+        
+        // Плавная прокрутка
+        function initSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    
+                    if (href !== '#') {
+                        const target = document.querySelector(href);
+                        if (target) {
+                            e.preventDefault();
+                            target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    }
+                });
+            });
+        }
+        
+        // Анимация кнопок
+        function initButtonAnimations() {
+            document.querySelectorAll('.btn').forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-3px)';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        }
+        
+        // Добавляем небольшую задержку для анимации при загрузке
+        setTimeout(() => {
+            document.querySelectorAll('.animate-on-scroll').forEach(element => {
+                if (element.getBoundingClientRect().top < window.innerHeight * 0.8) {
+                    element.classList.add('animated');
+                }
+            });
+        }, 100);
+    </script>
+</body>
+</html>

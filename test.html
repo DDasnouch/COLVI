@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="stylesheet" href="style.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест на цветотип - COLVI</title>
+    <link rel="icon" type="image/png" href="https://img.icons8.com/color/96/000000/color-palette.png">
+    
+    <!-- Шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ЦВЕТА ПО ВАШЕМУ ТЗ */
+        :root {
+            --gray-light: #f5f5f5;
+            --gray-medium: #e0e0e0;
+            --gray-dark: #8a8a8a;
+            --black: #222222;
+            --white: #ffffff;
+            --pink: #ff6b8b;
+            --pink-dark: #e05573;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* ШАПКА */
+        header {
+            background-color: var(--gray-light);
+            padding: 20px 0;
+            border-bottom: 1px solid var(--gray-medium);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 32px;
+            color: var(--black);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+        
+        nav a {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--black);
+            text-decoration: none;
+            padding: 8px 0;
+            position: relative;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--pink);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--pink);
+            transition: width 0.3s;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        nav a.active {
+            color: var(--pink);
+        }
+        
+        nav a.active::after {
+            width: 100%;
+        }
+        
+        /* ОСНОВНОЙ КОНТЕНТ */
+        .test-container {
+            max-width: 800px;
+            margin: 60px auto;
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .test-header {
+            background-color: var(--gray-light);
+            padding: 40px;
+            text-align: center;
+            border-bottom: 1px solid var(--gray-medium);
+        }
+        
+        .test-header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        
+        .test-header p {
+            color: var(--gray-dark);
+            font-size: 18px;
+        }
+        
+        /* ПРОГРЕСС-БАР */
+        .progress-container {
+            padding: 20px 40px;
+            background-color: var(--white);
+            border-bottom: 1px solid var(--gray-medium);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: var(--gray-light);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--pink);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .progress-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-top: 10px;
+            color: var(--black);
+        }
+        
+        /* ВОПРОСЫ */
+        .question-container {
+            padding: 40px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .question {
+            margin-bottom: 30px;
+        }
+        
+        .question h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: var(--black);
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .option {
+            padding: 18px 20px;
+            background-color: var(--white);
+            border: 2px solid var(--gray-medium);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+        
+        .option:hover {
+            border-color: var(--pink);
+            background-color: rgba(255, 107, 139, 0.05);
+        }
+        
+        .option.selected {
+            border-color: var(--pink);
+            background-color: rgba(255, 107, 139, 0.1);
+            font-weight: 500;
+        }
+        
+        /* КНОПКИ */
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 40px;
+            background-color: var(--gray-light);
+            border-top: 1px solid var(--gray-medium);
+        }
+        
+        .btn {
+            padding: 14px 30px;
+            background-color: var(--pink);
+            color: var(--white);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            text-decoration: none;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover {
+            background-color: var(--pink-dark);
+            transform: translateY(-2px);
+        }
+        
+        .btn:disabled {
+            background-color: var(--gray-dark);
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--black);
+            border: 2px solid var(--gray-dark);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--gray-dark);
+            color: var(--white);
+        }
+        
+        /* РЕЗУЛЬТАТ */
+        .result-container {
+            display: none;
+            padding: 40px;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .result-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .result-header h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        
+        .result-card {
+            background-color: var(--gray-light);
+            border-radius: 10px;
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .season-name {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: var(--black);
+        }
+        
+        .season-description {
+            font-size: 18px;
+            margin-bottom: 25px;
+            color: var(--gray-dark);
+        }
+        
+        .color-palette {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .color-item {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            border: 2px solid var(--white);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .recommendations {
+            margin-top: 30px;
+        }
+        
+        .recommendations h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--black);
+        }
+        
+        .recommendations ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .recommendations li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--gray-medium);
+        }
+        
+        .recommendations li:last-child {
+            border-bottom: none;
+        }
+        
+        /* ФУТЕР */
+        footer {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 60px 0 30px;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 28px;
+            text-transform: uppercase;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--pink);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            color: var(--gray-dark);
+        }
+        
+        /* АДАПТИВНОСТЬ */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .test-container {
+                margin: 30px 20px;
+            }
+            
+            .test-header,
+            .question-container,
+            .progress-container {
+                padding: 30px 20px;
+            }
+            
+            .buttons {
+                padding: 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+                text-align: center;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+        
+        /* Стили для скролла */
+        .question-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .question-container::-webkit-scrollbar-track {
+            background: var(--gray-light);
+            border-radius: 3px;
+        }
+        
+        .question-container::-webkit-scrollbar-thumb {
+            background: var(--pink);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <!-- ШАПКА -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">COLVI</div>
+                <nav>
+                    <a href="index.html">Главная</a>
+                    <a href="test-instructions.html">Перед тестом</a>
+                    <a href="test.html" class="active">Тест</a>
+                    <a href="colors.html">Цвета</a>
+                    <a href="looks.html">Образы</a>
+                    <a href="about.html">О нас</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- ТЕСТ -->
+    <div class="container">
+        <div class="test-container">
+            <div class="test-header">
+                <h1>Тест на цветотип</h1>
+                <p>15 вопросов для точного определения вашего типа</p>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">Вопрос 1 из 15</div>
+            </div>
+            
+            <div id="questionContainer" class="question-container">
+                <!-- Вопросы загружаются через JavaScript -->
+            </div>
+            
+            <div class="buttons">
+                <button class="btn btn-secondary" id="prevBtn" disabled>Назад</button>
+                <button class="btn" id="nextBtn">Далее</button>
+                <button class="btn" id="finishBtn" style="display: none;">Завершить тест</button>
+            </div>
+            
+            <div id="resultContainer" class="result-container">
+                <div class="result-header">
+                    <h2>Ваш результат</h2>
+                    <p>Определите, какие цвета вам подходят лучше всего</p>
+                </div>
+                
+                <div id="resultContent">
+                    <!-- Результат загружается через JavaScript -->
+                </div>
+                
+                <div class="buttons">
+                    <a href="colors.html" class="btn">Смотреть все цвета</a>
+                    <a href="looks.html" class="btn btn-secondary">Примеры образов</a>
+                    <button class="btn" id="restartBtn">Пройти ещё раз</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ФУТЕР -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">COLVI</div>
+                <div class="footer-links">
+                    <a href="index.html">Главная</a>
+                    <a href="test.html">Тест</a>
+                    <a href="looks.html">Образы</a>
+                    <a href="colors.html">Цвета</a>
+                    <a href="about.html">Контакты</a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 COLVI. Все права защищены.</p>
+                <p style="margin-top: 10px;">Сайт о цветотипах внешности</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ВОПРОСЫ ТЕСТА (15 ВОПРОСОВ!)
+        const questions = [
+            {
+                id: 1,
+                text: "Какой у вас естественный оттенок кожи?",
+                options: [
+                    "Очень светлый, почти фарфоровый",
+                    "Светлый с розоватым или оливковым подтоном",
+                    "Средний, бежевый, с теплым подтоном",
+                    "Смуглый, золотистый или оливковый",
+                    "Контрастный: очень светлый или очень темный"
+                ]
+            },
+            {
+                id: 2,
+                text: "Как ваша кожа реагирует на солнце?",
+                options: [
+                    "Легко обгораю, почти не загораю",
+                    "Обгораю, но потом появляется легкий загар",
+                    "Загораю постепенно, загар получается ровным",
+                    "Быстро загораю, загар держится долго",
+                    "Обгораю редко, загар получается темным"
+                ]
+            },
+            {
+                id: 3,
+                text: "Какой у вас натуральный цвет волос?",
+                options: [
+                    "Платиновый блонд, пепельный блонд",
+                    "Русый, светло-коричневый с пепельным оттенком",
+                    "Золотистый блонд, светло-рыжий, медный",
+                    "Каштановый, темно-рыжий, шоколадный",
+                    "Черный, темно-коричневый с синим отливом"
+                ]
+            },
+            {
+                id: 4,
+                text: "Какой у вас цвет глаз?",
+                options: [
+                    "Светло-голубой, серо-голубой, серый",
+                    "Серо-зеленый, ореховый, голубой с серым",
+                    "Теплый карий, зеленый с золотыми крапинками",
+                    "Темный карий, зеленый, оливковый",
+                    "Темно-карий, черный, ярко-голубой, синий"
+                ]
+            },
+            {
+                id: 5,
+                text: "Какой цвет бровей и ресниц?",
+                options: [
+                    "Очень светлые, почти невидимые",
+                    "Средней насыщенности, пепельного оттенка",
+                    "Золотисто-коричневые, теплые",
+                    "Темно-коричневые, насыщенные",
+                    "Черные или очень темные"
+                ]
+            },
+            {
+                id: 6,
+                text: "Какие украшения вам больше идут?",
+                options: [
+                    "Только серебро, платина, белое золото",
+                    "Серебро, но иногда и неяркое золото",
+                    "Теплое золото, медь, латунь",
+                    "Золото, но и серебро тоже подходит",
+                    "Яркое серебро, платина, черненое серебро"
+                ]
+            },
+            {
+                id: 7,
+                text: "Какой красный цвет вам больше подходит?",
+                options: [
+                    "Холодный розово-красный, арбузный",
+                    "Классический красный с синим подтоном",
+                    "Теплый кораллово-красный, томатный",
+                    "Терракотовый, кирпичный, ржавый",
+                    "Яркий алый, винный, рубиновый"
+                ]
+            },
+            {
+                id: 8,
+                text: "Какой синий цвет вам лучше всего?",
+                options: [
+                    "Нежно-голубой, цвет неба",
+                    "Джинсовый синий, серо-синий",
+                    "Бирюзовый, аквамариновый",
+                    "Теплый синий, цвет морской волны",
+                    "Королевский синий, электрик, сапфировый"
+                ]
+            },
+            {
+                id: 9,
+                text: "Какой белый цвет вам идет?",
+                options: [
+                    "Чистый белоснежный",
+                    "Молочный, кремовый",
+                    "Теплый белый, слоновая кость",
+                    "Бежевый, песочный",
+                    "Только чистый яркий белый"
+                ]
+            },
+            {
+                id: 10,
+                text: "Какой черный цвет вам подходит?",
+                options: [
+                    "Не идёт совсем, выгляжу уставшей",
+                    "Только с другими цветами, не рядом с лицом",
+                    "Теплый черный, с коричневым подтоном",
+                    "Классический черный, но не лучший вариант",
+                    "Идеально, выгляжу эффектно и контрастно"
+                ]
+            },
+            {
+                id: 11,
+                text: "Какой зеленый вам нравится больше?",
+                options: [
+                    "Мятный, бирюзово-зеленый",
+                    "Оливковый, хаки, защитный",
+                    "Салатовый, лаймовый, яблочный",
+                    "Травяной, изумрудный, лесной",
+                    "Холодный изумрудный, хвойный"
+                ]
+            },
+            {
+                id: 12,
+                text: "Как вы выглядите в пастельных тонах?",
+                options: [
+                    "Отлично, особенно в холодных пастельных",
+                    "Неплохо, но нужны приглушенные оттенки",
+                    "Хорошо в теплых пастельных тонах",
+                    "Лучше в насыщенных, чем в пастельных",
+                    "Пастельные не идут, нужны яркие цвета"
+                ]
+            },
+            {
+                id: 13,
+                text: "Какой у вас природный уровень контраста?",
+                options: [
+                    "Низкий: все черты одного тона",
+                    "Средний: есть небольшой контраст",
+                    "Средне-высокий: заметный контраст",
+                    "Высокий: волосы намного темнее кожи",
+                    "Очень высокий: яркий контраст черт"
+                ]
+            },
+            {
+                id: 14,
+                text: "Какой макияж вам больше идет?",
+                options: [
+                    "Минимальный, естественные тона",
+                    "Приглушенный, дымчатые тени",
+                    "Теплый, персиковые и золотые тона",
+                    "Насыщенный, землистые оттенки",
+                    "Яркий, контрастный, графичный"
+                ]
+            },
+            {
+                id: 15,
+                text: "Какой сезон вам больше подходит по ощущениям?",
+                options: [
+                    "Легкое, свежее лето",
+                    "Мягкая, теплая весна",
+                    "Яркая, золотая осень",
+                    "Контрастная, холодная зима",
+                    "Затрудняюсь ответить"
+                ]
+            }
+        ];
+
+        // ДАННЫЕ О ЦВЕТОТИПАХ
+        const seasonsData = {
+            spring: {
+                name: "Весна",
+                description: "Теплый, светлый, яркий цветотип. Вам подходят свежие, теплые и солнечные цвета.",
+                colors: ["#FFCC80", "#FFB74D", "#FF9800", "#4CAF50", "#2196F3"],
+                recommendations: [
+                    "Теплые пастельные оттенки",
+                    "Золотистые и персиковые тона",
+                    "Светлый деним и бежевые цвета",
+                    "Яркая бирюза и коралловый",
+                    "Избегайте холодных темных цветов"
+                ]
+            },
+            summer: {
+                name: "Лето",
+                description: "Холодный, светлый, приглушенный цветотип. Вам идут дымчатые, размытые и холодные оттенки.",
+                colors: ["#81D4FA", "#4FC3F7", "#2196F3", "#E1BEE7", "#F48FB1"],
+                recommendations: [
+                    "Холодные пастельные тона",
+                    "Серо-голубые и сиреневые оттенки",
+                    "Приглушенный розовый и мятный",
+                    "Дымчатые и размытые цвета",
+                    "Серебряные аксессуары лучше золотых"
+                ]
+            },
+            autumn: {
+                name: "Осень",
+                description: "Теплый, насыщенный, глубокий цветотип. Вам подходят землистые, теплые и насыщенные цвета.",
+                colors: ["#A1887F", "#8D6E63", "#795548", "#FF9800", "#8BC34A"],
+                recommendations: [
+                    "Теплые землистые тона",
+                    "Терракотовый и горчичный",
+                    "Оливковый и хаки",
+                    "Насыщенный коричневый и бордовый",
+                    "Золотые и медные аксессуары"
+                ]
+            },
+            winter: {
+                name: "Зима",
+                description: "Холодный, контрастный, яркий цветотип. Вам идут чистые, яркие и контрастные цвета.",
+                colors: ["#7986CB", "#5C6BC0", "#3F51B5", "#F06292", "#4CAF50"],
+                recommendations: [
+                    "Яркие холодные цвета",
+                    "Черный и чистый белый",
+                    "Изумрудный и королевский синий",
+                    "Фуксия и малиновый",
+                    "Серебряные и платиновые аксессуары"
+                ]
+            }
+        };
+
+        // ПЕРЕМЕННЫЕ ТЕСТА
+        let currentQuestion = 0;
+        let answers = [];
+        let scores = { spring: 0, summer: 0, autumn: 0, winter: 0 };
+
+        // ФУНКЦИИ
+        function showQuestion() {
+            const question = questions[currentQuestion];
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            
+            // Обновляем прогресс
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            progressFill.style.width = `${progress}%`;
+            progressText.textContent = `Вопрос ${currentQuestion + 1} из ${questions.length}`;
+            
+            // Создаем HTML вопроса
+            let html = `
+                <div class="question">
+                    <h3>${question.text}</h3>
+                    <div class="options">
+            `;
+            
+            question.options.forEach((option, index) => {
+                const isSelected = answers[currentQuestion] === index;
+                html += `
+                    <div class="option ${isSelected ? 'selected' : ''}" onclick="selectAnswer(${index})">
+                        ${option}
+                    </div>
+                `;
+            });
+            
+            html += `</div></div>`;
+            document.getElementById('questionContainer').innerHTML = html;
+            
+            updateButtons();
+        }
+
+        function selectAnswer(index) {
+            answers[currentQuestion] = index;
+            
+            // Логика подсчета баллов для 15 вопросов
+            if (currentQuestion === 0) { // Оттенок кожи
+                if (index === 0) scores.summer += 3;
+                else if (index === 1) scores.summer += 2;
+                else if (index === 2) scores.autumn += 3;
+                else if (index === 3) scores.autumn += 2;
+                else if (index === 4) scores.winter += 3;
+            }
+            else if (currentQuestion === 1) { // Реакция на солнце
+                if (index === 0) scores.spring += 2;
+                else if (index === 1) scores.summer += 2;
+                else if (index === 2) scores.autumn += 3;
+                else if (index === 3) scores.autumn += 2;
+                else if (index === 4) scores.winter += 2;
+            }
+            else if (currentQuestion === 2) { // Цвет волос
+                if (index === 0) scores.summer += 3;
+                else if (index === 1) scores.summer += 2;
+                else if (index === 2) scores.spring += 3;
+                else if (index === 3) scores.autumn += 3;
+                else if (index === 4) scores.winter += 3;
+            }
+            else if (currentQuestion === 3) { // Цвет глаз
+                if (index === 0) scores.summer += 3;
+                else if (index === 1) scores.summer += 2;
+                else if (index === 2) scores.spring += 3;
+                else if (index === 3) scores.autumn += 3;
+                else if (index === 4) scores.winter += 3;
+            }
+            else if (currentQuestion === 4) { // Брови и ресницы
+                if (index === 0) scores.summer += 3;
+                else if (index === 1) scores.summer += 2;
+                else if (index === 2) scores.spring += 2;
+                else if (index === 3) scores.autumn += 2;
+                else if (index === 4) scores.winter += 3;
+            }
+            else if (currentQuestion === 5) { // Украшения
+                if (index === 0) scores.summer += 3;
+                else if (index === 1) scores.summer += 2;
+                else if (index === 2) scores.autumn += 3;
+                else if (index === 3) scores.spring += 2;
+                else if (index === 4) scores.winter += 3;
+            }
+            else if (currentQuestion === 6) { // Красный цвет
+                if (index === 0) scores.summer += 2;
+                else if (index === 1) scores.winter += 2;
+                else if (index === 2) scores.spring += 3;
+                else if (index === 3) scores.autumn += 3;
+                else if (index === 4) scores.winter += 3;
+            }
+            else if (currentQuestion === 7) { // Синий цвет
+                if (index === 0) scores.summer += 2;
+                else if (index === 1) scores.summer += 1;
+                else if (index === 2) scores.spring += 3;
+                else if (index === 3) scores.autumn += 2;
+                else if (index === 4) scores.winter += 3;
+            }
+            else if (currentQuestion === 8) { // Белый цвет
+                if (index === 0) scores.winter += 3;
+                else if (index === 1) scores.summer += 2;
+                else if (index === 2) scores.spring += 3;
+                else if (index === 3) scores.autumn += 2;
+                else if (index === 4) scores.winter += 3;
+            }
+            else if (currentQuestion === 9) { // Черный цвет
+                if (index === 0) scores.spring += 0;
+                else if (index === 1) scores.summer += 1;
+                else if (index === 2) scores.autumn += 1;
+                else if (index === 3) scores.autumn += 2;
+                else if (index === 4) scores.winter += 3;
+            }
+            else if (currentQuestion === 10) { // Зеленый цвет
+                if (index === 0) scores.summer += 2;
+                else if (index === 1) scores.autumn += 3;
+                else if (index === 2) scores.spring += 3;
+                else if (index === 3) scores.autumn += 2;
+                else if (index === 4) scores.winter += 2;
+            }
+            else if (currentQuestion === 11) { // Пастельные тона
+                if (index === 0) scores.summer += 3;
+                else if (index === 1) scores.summer += 2;
+                else if (index === 2) scores.spring += 3;
+                else if (index === 3) scores.autumn += 1;
+                else if (index === 4) scores.winter += 0;
+            }
+            else if (currentQuestion === 12) { // Контраст
+                if (index === 0) scores.summer += 2;
+                else if (index === 1) scores.spring += 1;
+                else if (index === 2) scores.autumn += 2;
+                else if (index === 3) scores.winter += 2;
+                else if (index === 4) scores.winter += 3;
+            }
+            else if (currentQuestion === 13) { // Макияж
+                if (index === 0) scores.summer += 2;
+                else if (index === 1) scores.summer += 1;
+                else if (index === 2) scores.spring += 3;
+                else if (index === 3) scores.autumn += 3;
+                else if (index === 4) scores.winter += 3;
+            }
+            else if (currentQuestion === 14) { // Сезон по ощущениям
+                if (index === 0) scores.summer += 3;
+                else if (index === 1) scores.spring += 3;
+                else if (index === 2) scores.autumn += 3;
+                else if (index === 3) scores.winter += 3;
+            }
+            
+            showQuestion();
+        }
+
+        function updateButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const finishBtn = document.getElementById('finishBtn');
+            
+            // Кнопка "Назад"
+            prevBtn.disabled = currentQuestion === 0;
+            
+            // Кнопка "Далее"
+            nextBtn.disabled = answers[currentQuestion] === undefined;
+            
+            // Кнопка "Завершить"
+            if (currentQuestion === questions.length - 1) {
+                nextBtn.style.display = 'none';
+                finishBtn.style.display = 'block';
+                finishBtn.disabled = answers[currentQuestion] === undefined;
+            } else {
+                nextBtn.style.display = 'block';
+                finishBtn.style.display = 'none';
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion();
+            }
+        }
+
+        function finishTest() {
+            // Определяем победителя
+            let maxScore = 0;
+            let resultSeason = '';
+            
+            for (const [season, score] of Object.entries(scores)) {
+                if (score > maxScore) {
+                    maxScore = score;
+                    resultSeason = season;
+                }
+            }
+            
+            // Если баллы равные, выбираем случайно
+            if (maxScore === 0) {
+                const seasons = ['spring', 'summer', 'autumn', 'winter'];
+                resultSeason = seasons[Math.floor(Math.random() * seasons.length)];
+            }
+            
+            showResult(resultSeason);
+        }
+
+        function showResult(season) {
+            const data = seasonsData[season];
+            
+            let html = `
+                <div class="result-card">
+                    <h3 class="season-name">${data.name}</h3>
+                    <p class="season-description">${data.description}</p>
+                    
+                    <div class="color-palette">
+            `;
+            
+            data.colors.forEach(color => {
+                html += `<div class="color-item" style="background-color: ${color};"></div>`;
+            });
+            
+            html += `
+                    </div>
+                    
+                    <div class="recommendations">
+                        <h4>Рекомендации:</h4>
+                        <ul>
+            `;
+            
+            data.recommendations.forEach(rec => {
+                html += `<li>${rec}</li>`;
+            });
+            
+            html += `
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="background-color: var(--white); padding: 20px; border-radius: 10px; margin-top: 20px;">
+                    <h4 style="font-family: 'Montserrat', sans-serif; font-weight: 600; margin-bottom: 15px;">Ваши результаты по типам:</h4>
+                    <p>Весна: ${scores.spring} баллов</p>
+                    <p>Лето: ${scores.summer} баллов</p>
+                    <p>Осень: ${scores.autumn} баллов</p>
+                    <p>Зима: ${scores.winter} баллов</p>
+                </div>
+            `;
+            
+            document.getElementById('resultContent').innerHTML = html;
+            document.getElementById('questionContainer').style.display = 'none';
+            document.querySelector('.progress-container').style.display = 'none';
+            document.querySelector('.buttons').style.display = 'none';
+            document.getElementById('resultContainer').style.display = 'block';
+        }
+
+        function restartTest() {
+            currentQuestion = 0;
+            answers = [];
+            scores = { spring: 0, summer: 0, autumn: 0, winter: 0 };
+            
+            document.getElementById('questionContainer').style.display = 'block';
+            document.querySelector('.progress-container').style.display = 'block';
+            document.querySelector('.buttons').style.display = 'flex';
+            document.getElementById('resultContainer').style.display = 'none';
+            
+            showQuestion();
+        }
+
+        // ИНИЦИАЛИЗАЦИЯ
+        document.addEventListener('DOMContentLoaded', function() {
+            showQuestion();
+            
+            // Назначаем обработчики
+            document.getElementById('prevBtn').addEventListener('click', prevQuestion);
+            document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+            document.getElementById('finishBtn').addEventListener('click', finishTest);
+            document.getElementById('restartBtn').addEventListener('click', restartTest);
+            
+            // Подсветка активной ссылки
+            const currentPage = window.location.pathname.split('/').pop();
+            document.querySelectorAll('nav a').forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Глобальные функции для HTML
+        window.selectAnswer = selectAnswer;
+    </script>
+    <script src="test-script.js"></script>
+</body>
+</html>

@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="stylesheet" href="style.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Цвета по типам - COLVI</title>
+    <link rel="icon" type="image/png" href="https://img.icons8.com/color/96/000000/color-palette.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --gray-light: #f5f5f5;
+            --gray-medium: #e0e0e0;
+            --gray-dark: #8a8a8a;
+            --black: #222222;
+            --white: #ffffff;
+            --pink: #ff6b8b;
+            --pink-dark: #e05573;
+            --spring: #FF9800;
+            --summer: #2196F3;
+            --autumn: #795548;
+            --winter: #3F51B5;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: var(--gray-light);
+            padding: 20px 0;
+            border-bottom: 1px solid var(--gray-medium);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 32px;
+            color: var(--black);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+        
+        nav a {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--black);
+            text-decoration: none;
+            padding: 8px 0;
+            position: relative;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--pink);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--pink);
+            transition: width 0.3s;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        nav a.active {
+            color: var(--pink);
+        }
+        
+        nav a.active::after {
+            width: 100%;
+        }
+        
+        .page-header {
+            padding: 100px 0 60px;
+            text-align: center;
+            background-color: var(--gray-light);
+        }
+        
+        .page-header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+        
+        .page-header p {
+            font-size: 18px;
+            color: var(--gray-dark);
+        }
+        
+        .color-types {
+            padding: 60px 0;
+        }
+        
+        .season-section {
+            margin-bottom: 80px;
+            padding: 40px;
+            background-color: var(--white);
+            border-radius: 10px;
+            border: 1px solid var(--gray-medium);
+        }
+        
+        .season-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--gray-medium);
+        }
+        
+        .season-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 20px;
+            color: var(--white);
+        }
+        
+        .spring-circle { background-color: var(--spring); }
+        .summer-circle { background-color: var(--summer); }
+        .autumn-circle { background-color: var(--autumn); }
+        .winter-circle { background-color: var(--winter); }
+        
+        .season-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 28px;
+            color: var(--black);
+        }
+        
+        .season-description {
+            font-size: 18px;
+            color: var(--gray-dark);
+            margin-bottom: 30px;
+        }
+        
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .color-item {
+            height: 80px;
+            border-radius: 10px;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s;
+            border: 2px solid var(--white);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .color-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .color-name {
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 12px;
+            color: var(--gray-dark);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .color-item:hover .color-name {
+            opacity: 1;
+        }
+        
+        .combinations {
+            margin-top: 40px;
+        }
+        
+        .combinations h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: var(--black);
+        }
+        
+        .combination-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .combination-item {
+            padding: 20px;
+            background-color: var(--gray-light);
+            border-radius: 10px;
+        }
+        
+        .combo-colors {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .combo-color {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            border: 2px solid var(--white);
+        }
+        
+        .combo-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .combo-description {
+            font-size: 14px;
+            color: var(--gray-dark);
+        }
+        
+        .recommendations {
+            margin-top: 40px;
+            padding: 30px;
+            background-color: rgba(255, 107, 139, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid var(--pink);
+        }
+        
+        .recommendations h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--black);
+        }
+        
+        .recommendations ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .recommendations li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .recommendations li:last-child {
+            border-bottom: none;
+        }
+        
+        .recommendations li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--pink);
+            font-weight: bold;
+        }
+        
+        .navigation-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid var(--gray-medium);
+        }
+        
+        .nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 25px;
+            background-color: var(--gray-light);
+            color: var(--black);
+            text-decoration: none;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover {
+            background-color: var(--pink);
+            color: var(--white);
+        }
+        
+        footer {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 60px 0 30px;
+            margin-top: 80px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 28px;
+            text-transform: uppercase;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--pink);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            color: var(--gray-dark);
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .season-section {
+                padding: 25px;
+            }
+            
+            .color-palette {
+                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            }
+            
+            .color-item {
+                height: 60px;
+            }
+            
+            .combination-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .navigation-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+                text-align: center;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ШАПКА -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">COLVI</div>
+                <nav>
+                    <a href="index.html">Главная</a>
+                    <a href="test-instructions.html">Перед тестом</a>
+                    <a href="test.html">Тест</a>
+                    <a href="colors.html" class="active">Цвета</a>
+                    <a href="looks.html">Образы</a>
+                    <a href="about.html">О нас</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- ЗАГОЛОВОК -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Цвета по типам</h1>
+            <p>Палитры цветов для каждого цветотипа</p>
+        </div>
+    </section>
+
+    <!-- ОСНОВНОЙ КОНТЕНТ -->
+    <div class="container">
+        <div class="color-types">
+            <!-- ВЕСНА -->
+            <div class="season-section" id="spring">
+                <div class="season-header">
+                    <div class="season-circle spring-circle">В</div>
+                    <h2 class="season-title">Весна</h2>
+                </div>
+                
+                <p class="season-description">
+                    Теплый, светлый и яркий цветотип. Вам подходят свежие, теплые и солнечные цвета, 
+                    напоминающие весеннюю природу.
+                </p>
+                
+                <h3>Палитра цветов:</h3>
+                <div class="color-palette">
+                    <div class="color-item" style="background-color: #FFF9C4;">
+                        <div class="color-name">Светло-желтый</div>
+                    </div>
+                    <div class="color-item" style="background-color: #FFECB3;">
+                        <div class="color-name">Кремовый</div>
+                    </div>
+                    <div class="color-item" style="background-color: #FFCC80;">
+                        <div class="color-name">Персиковый</div>
+                    </div>
+                    <div class="color-item" style="background-color: #FFB74D;">
+                        <div class="color-name">Абрикосовый</div>
+                    </div>
+                    <div class="color-item" style="background-color: #FF9800;">
+                        <div class="color-name">Оранжевый</div>
+                    </div>
+                    <div class="color-item" style="background-color: #81C784;">
+                        <div class="color-name">Салатовый</div>
+                    </div>
+                    <div class="color-item" style="background-color: #4CAF50;">
+                        <div class="color-name">Яблочно-зеленый</div>
+                    </div>
+                    <div class="color-item" style="background-color: #80DEEA;">
+                        <div class="color-name">Бирюзовый</div>
+                    </div>
+                    <div class="color-item" style="background-color: #4FC3F7;">
+                        <div class="color-name">Небесно-голубой</div>
+                    </div>
+                    <div class="color-item" style="background-color: #F48FB1;">
+                        <div class="color-name">Коралловый</div>
+                    </div>
+                </div>
+                
+                <div class="combinations">
+                    <h3>Лучшие сочетания:</h3>
+                    <div class="combination-grid">
+                        <div class="combination-item">
+                            <div class="combo-colors">
+                                <div class="combo-color" style="background-color: #FFCC80;"></div>
+                                <div class="combo-color" style="background-color: #81C784;"></div>
+                                <div class="combo-color" style="background-color: #FFF9C4;"></div>
+                            </div>
+                            <div class="combo-title">Персиковый + Зелень</div>
+                            <div class="combo-description">Свежее весеннее сочетание для повседневных образов</div>
+                        </div>
+                        
+                        <div class="combination-item">
+                            <div class="combo-colors">
+                                <div class="combo-color" style="background-color: #FFB74D;"></div>
+                                <div class="combo-color" style="background-color: #4FC3F7;"></div>
+                                <div class="combo-color" style="background-color: #FFECB3;"></div>
+                            </div>
+                            <div class="combo-title">Оранжевый + Бирюза</div>
+                            <div class="combo-description">Энергичный и яркий контраст для особых случаев</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="recommendations">
+                    <h3>Рекомендации для Весны:</h3>
+                    <ul>
+                        <li>Используйте теплые пастельные оттенки</li>
+                        <li>Выбирайте золотые аксессуары</li>
+                        <li>Отдавайте предпочтение натуральным тканям</li>
+                        <li>Избегайте холодных темных цветов</li>
+                        <li>Экспериментируйте с бирюзовыми и коралловыми акцентами</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- ЛЕТО -->
+            <div class="season-section" id="summer">
+                <div class="season-header">
+                    <div class="season-circle summer-circle">Л</div>
+                    <h2 class="season-title">Лето</h2>
+                </div>
+                
+                <p class="season-description">
+                    Холодный, светлый и приглушенный цветотип. Вам идут дымчатые, размытые и холодные оттенки, 
+                    как летний морской бриз.
+                </p>
+                
+                <h3>Палитра цветов:</h3>
+                <div class="color-palette">
+                    <div class="color-item" style="background-color: #F5F5F5;">
+                        <div class="color-name">Молочный</div>
+                    </div>
+                    <div class="color-item" style="background-color: #E0E0E0;">
+                        <div class="color-name">Серо-белый</div>
+                    </div>
+                    <div class="color-item" style="background-color: #81D4FA;">
+                        <div class="color-name">Нежно-голубой</div>
+                    </div>
+                    <div class="color-item" style="background-color: #4FC3F7;">
+                        <div class="color-name">Голубой</div>
+                    </div>
+                    <div class="color-item" style="background-color: #2196F3;">
+                        <div class="color-name">Синий</div>
+                    </div>
+                    <div class="color-item" style="background-color: #E1BEE7;">
+                        <div class="color-name">Сиреневый</div>
+                    </div>
+                    <div class="color-item" style="background-color: #CE93D8;">
+                        <div class="color-name">Лавандовый</div>
+                    </div>
+                    <div class="color-item" style="background-color: #F48FB1;">
+                        <div class="color-name">Приглушенный розовый</div>
+                    </div>
+                    <div class="color-item" style="background-color: #80CBC4;">
+                        <div class="color-name">Мятный</div>
+                    </div>
+                    <div class="color-item" style="background-color: #90A4AE;">
+                        <div class="color-name">Серо-голубой</div>
+                    </div>
+                </div>
+                
+                <div class="combinations">
+                    <h3>Лучшие сочетания:</h3>
+                    <div class="combination-grid">
+                        <div class="combination-item">
+                            <div class="combo-colors">
+                                <div class="combo-color" style="background-color: #81D4FA;"></div>
+                                <div class="combo-color" style="background-color: #F48FB1;"></div>
+                                <div class="combo-color" style="background-color: #F5F5F5;"></div>
+                            </div>
+                            <div class="combo-title">Голубой + Розовый</div>
+                            <div class="combo-description">Нежное романтичное сочетание для свиданий</div>
+                        </div>
+                        
+                        <div class="combination-item">
+                            <div class="combo-colors">
+                                <div class="combo-color" style="background-color: #80CBC4;"></div>
+                                <div class="combo-color" style="background-color: #E1BEE7;"></div>
+                                <div class="combo-color" style="background-color: #E0E0E0;"></div>
+                            </div>
+                            <div class="combo-title">Мятный + Сиреневый</div>
+                            <div class="combo-description">Свежее летнее сочетание для офиса</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="recommendations">
+                    <h3>Рекомендации для Лета:</h3>
+                    <ul>
+                        <li>Выбирайте холодные пастельные тона</li>
+                        <li>Дымчатые и размытые оттенки создают элегантность</li>
+                        <li>Серебряные аксессуары добавят блеска</li>
+                        <li>Приглушенные цвета лучше ярких</li>
+                        <li>Избегайте чистых черных и белых цветов</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- ОСЕНЬ -->
+            <div class="season-section" id="autumn">
+                <div class="season-header">
+                    <div class="season-circle autumn-circle">О</div>
+                    <h2 class="season-title">Осень</h2>
+                </div>
+                
+                <p class="season-description">
+                    Теплый, насыщенный и глубокий цветотип. Вам подходят землистые, теплые и насыщенные цвета, 
+                    как осенняя листва.
+                </p>
+                
+                <h3>Палитра цветов:</h3>
+                <div class="color-palette">
+                    <div class="color-item" style="background-color: #FFF3E0;">
+                        <div class="color-name">Слоновая кость</div>
+                    </div>
+                    <div class="color-item" style="background-color: #FFCC80;">
+                        <div class="color-name">Терракотовый</div>
+                    </div>
+                    <div class="color-item" style="background-color: #FF9800;">
+                        <div class="color-name">Тыквенный</div>
+                    </div>
+                    <div class="color-item" style="background-color: #F57C00;">
+                        <div class="color-name">Оранжевый</div>
+                    </div>
+                    <div class="color-item" style="background-color: #8D6E63;">
+                        <div class="color-name">Горчичный</div>
+                    </div>
+                    <div class="color-item" style="background-color: #795548;">
+                        <div class="color-name">Шоколадный</div>
+                    </div>
+                    <div class="color-item" style="background-color: #8BC34A;">
+                        <div class="color-name">Оливковый</div>
+                    </div>
+                    <div class="color-item" style="background-color: #689F38;">
+                        <div class="color-name">Зеленый</div>
+                    </div>
+                    <div class="color-item" style="background-color: #D84315;">
+                        <div class="color-name">Кирпичный</div>
+                    </div>
+                    <div class="color-item" style="background-color: #6D4C41;">
+                        <div class="color-name">Коричневый</div>
+                    </div>
+                </div>
+                
+                <div class="combinations">
+                    <h3>Лучшие сочетания:</h3>
+                    <div class="combination-grid">
+                        <div class="combination-item">
+                            <div class="combo-colors">
+                                <div class="combo-color" style="background-color: #8D6E63;"></div>
+                                <div class="combo-color" style="background-color: #8BC34A;"></div>
+                                <div class="combo-color" style="background-color: #FFF3E0;"></div>
+                            </div>
+                            <div class="combo-title">Горчичный + Оливковый</div>
+                            <div class="combo-description">Землистое природное сочетание для осенних прогулок</div>
+                        </div>
+                        
+                        <div class="combination-item">
+                            <div class="combo-colors">
+                                <div class="combo-color" style="background-color: #795548;"></div>
+                                <div class="combo-color" style="background-color: #D84315;"></div>
+                                <div class="combo-color" style="background-color: #FFCC80;"></div>
+                            </div>
+                            <div class="combo-title">Шоколадный + Кирпичный</div>
+                            <div class="combo-description">Теплое осеннее сочетание для вечерних выходов</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="recommendations">
+                    <h3>Рекомендации для Осени:</h3>
+                    <ul>
+                        <li>Используйте теплые насыщенные цвета</li>
+                        <li>Землистые и природные оттенки подчеркнут индивидуальность</li>
+                        <li>Золотые и медные аксессуары добавят тепла</li>
+                        <li>Текстурированные ткани отлично подходят</li>
+                        <li>Избегайте холодных пастельных тонов</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- ЗИМА -->
+            <div class="season-section" id="winter">
+                <div class="season-header">
+                    <div class="season-circle winter-circle">З</div>
+                    <h2 class="season-title">Зима</h2>
+                </div>
+                
+                <p class="season-description">
+                    Холодный, контрастный и яркий цветотип. Вам идут чистые, яркие и контрастные цвета, 
+                    как зимний пейзаж.
+                </p>
+                
+                <h3>Палитра цветов:</h3>
+                <div class="color-palette">
+                    <div class="color-item" style="background-color: #FFFFFF;">
+                        <div class="color-name">Белоснежный</div>
+                    </div>
+                    <div class="color-item" style="background-color: #000000;">
+                        <div class="color-name">Черный</div>
+                    </div>
+                    <div class="color-item" style="background-color: #7986CB;">
+                        <div class="color-name">Королевский синий</div>
+                    </div>
+                    <div class="color-item" style="background-color: #5C6BC0;">
+                        <div class="color-name">Сапфировый</div>
+                    </div>
+                    <div class="color-item" style="background-color: #3F51B5;">
+                        <div class="color-name">Индиго</div>
+                    </div>
+                    <div class="color-item" style="background-color: #F06292;">
+                        <div class="color-name">Фуксия</div>
+                    </div>
+                    <div class="color-item" style="background-color: #EC407A;">
+                        <div class="color-name">Розовый</div>
+                    </div>
+                    <div class="color-item" style="background-color: #4CAF50;">
+                        <div class="color-name">Изумрудный</div>
+                    </div>
+                    <div class="color-item" style="background-color: #2E7D32;">
+                        <div class="color-name">Зеленый</div>
+                    </div>
+                    <div class="color-item" style="background-color: #D32F2F;">
+                        <div class="color-name">Красный</div>
+                    </div>
+                </div>
+                
+                <div class="combinations">
+                    <h3>Лучшие сочетания:</h3>
+                    <div class="combination-grid">
+                        <div class="combination-item">
+                            <div class="combo-colors">
+                                <div class="combo-color" style="background-color: #3F51B5;"></div>
+                                <div class="combo-color" style="background-color: #F06292;"></div>
+                                <div class="combo-color" style="background-color: #FFFFFF;"></div>
+                            </div>
+                            <div class="combo-title">Синий + Фуксия</div>
+                            <div class="combo-description">Яркий контрастный лук для особых случаев</div>
+                        </div>
+                        
+                        <div class="combination-item">
+                            <div class="combo-colors">
+                                <div class="combo-color" style="background-color: #000000;"></div>
+                                <div class="combo-color" style="background-color: #D32F2F;"></div>
+                                <div class="combo-color" style="background-color: #FFFFFF;"></div>
+                            </div>
+                            <div class="combo-title">Черный + Белый + Красный</div>
+                            <div class="combo-description">Классический зимний контраст для вечеринок</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="recommendations">
+                    <h3>Рекомендации для Зимы:</h3>
+                    <ul>
+                        <li>Четкие контрастные сочетания создают эффект</li>
+                        <li>Чистые яркие цвета подчеркивают индивидуальность</li>
+                        <li>Серебряные и платиновые аксессуары добавят блеска</li>
+                        <li>Гладкие ткани лучше текстурных</li>
+                        <li>Избегайте приглушенных и размытых оттенков</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- НАВИГАЦИЯ -->
+            <div class="navigation-links">
+                <a href="test.html" class="nav-link">← Вернуться к тесту</a>
+                <a href="looks.html" class="nav-link">Смотреть примеры образов →</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ФУТЕР -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">COLVI</div>
+                <div class="footer-links">
+                    <a href="index.html">Главная</a>
+                    <a href="test.html">Тест</a>
+                    <a href="looks.html">Образы</a>
+                    <a href="colors.html">Цвета</a>
+                    <a href="about.html">Контакты</a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 COLVI. Все права защищены.</p>
+                <p style="margin-top: 10px;">Сайт о цветотипах внешности</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Подсветка активной ссылки
+        const currentPage = window.location.pathname.split('/').pop();
+        document.querySelectorAll('nav a').forEach(link => {
+            if (link.getAttribute('href') === currentPage) {
+                link.classList.add('active');
+            }
+        });
+        
+        // Анимация цветов
+        const colorItems = document.querySelectorAll('.color-item');
+        colorItems.forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(20px)';
+            item.style.transition = `opacity 0.5s ${index * 0.05}s, transform 0.5s ${index * 0.05}s`;
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            observer.observe(item);
+        });
+        
+        // Плавный скролл к секциям
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href !== '#') {
+                    const target = document.querySelector(href);
+                    if (target) {
+                        e.preventDefault();
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

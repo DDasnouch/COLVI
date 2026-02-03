@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="stylesheet" href="style.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Перед тестом - COLVI</title>
+    <link rel="icon" type="image/png" href="https://img.icons8.com/color/96/000000/color-palette.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --gray-light: #f5f5f5;
+            --gray-medium: #e0e0e0;
+            --gray-dark: #8a8a8a;
+            --black: #222222;
+            --white: #ffffff;
+            --pink: #ff6b8b;
+            --pink-dark: #e05573;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: var(--gray-light);
+            padding: 20px 0;
+            border-bottom: 1px solid var(--gray-medium);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 32px;
+            color: var(--black);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+        
+        nav a {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--black);
+            text-decoration: none;
+            padding: 8px 0;
+            position: relative;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--pink);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--pink);
+            transition: width 0.3s;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        nav a.active {
+            color: var(--pink);
+        }
+        
+        nav a.active::after {
+            width: 100%;
+        }
+        
+        .page-header {
+            padding: 100px 0 60px;
+            text-align: center;
+            background-color: var(--gray-light);
+        }
+        
+        .page-header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+        
+        .page-header p {
+            font-size: 18px;
+            color: var(--gray-dark);
+        }
+        
+        .instructions-container {
+            max-width: 900px;
+            margin: 60px auto;
+        }
+        
+        .instruction-section {
+            margin-bottom: 50px;
+            padding: 40px;
+            background-color: var(--white);
+            border-radius: 10px;
+            border: 1px solid var(--gray-medium);
+        }
+        
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 24px;
+            margin-bottom: 25px;
+            color: var(--black);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background-color: var(--pink);
+            border-radius: 2px;
+        }
+        
+        .tip-box {
+            background-color: rgba(255, 107, 139, 0.05);
+            border-left: 4px solid var(--pink);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .do-dont {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .do, .dont {
+            padding: 25px;
+            border-radius: 10px;
+        }
+        
+        .do {
+            background-color: rgba(76, 175, 80, 0.05);
+            border: 1px solid rgba(76, 175, 80, 0.2);
+        }
+        
+        .dont {
+            background-color: rgba(244, 67, 54, 0.05);
+            border: 1px solid rgba(244, 67, 54, 0.2);
+        }
+        
+        .do h3, .dont h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .do h3 {
+            color: #4CAF50;
+        }
+        
+        .dont h3 {
+            color: #F44336;
+        }
+        
+        ul, ol {
+            padding-left: 20px;
+            margin: 15px 0;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 18px 45px;
+            background-color: var(--pink);
+            color: var(--white);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 20px;
+        }
+        
+        .btn:hover {
+            background-color: var(--pink-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 107, 139, 0.2);
+        }
+        
+        .center-btn {
+            text-align: center;
+            margin: 50px 0;
+        }
+        
+        footer {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 60px 0 30px;
+            margin-top: 80px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 28px;
+            text-transform: uppercase;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--pink);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            color: var(--gray-dark);
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .page-header {
+                padding: 80px 0 40px;
+            }
+            
+            .instruction-section {
+                padding: 25px;
+            }
+            
+            .do-dont {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+                text-align: center;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ШАПКА -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">COLVI</div>
+                <nav>
+                    <a href="index.html">Главная</a>
+                    <a href="test-instructions.html" class="active">Перед тестом</a>
+                    <a href="test.html">Тест</a>
+                    <a href="colors.html">Цвета</a>
+                    <a href="looks.html">Образы</a>
+                    <a href="about.html">О нас</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- ЗАГОЛОВОК -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Перед тестом</h1>
+            <p>Важная информация для точного определения цветотипа</p>
+        </div>
+    </section>
+
+    <!-- ИНСТРУКЦИИ -->
+    <div class="container">
+        <div class="instructions-container">
+            <!-- Раздел 1 -->
+            <div class="instruction-section">
+                <h2 class="section-title">Подготовка к тесту</h2>
+                <p>Для получения точного результата важно правильно подготовиться к тесту. Следуйте этим рекомендациям:</p>
+                
+                <div class="tip-box">
+                    <h3>Лучшие условия для теста:</h3>
+                    <ul>
+                        <li>Смотрите на себя при естественном дневном свете</li>
+                        <li>Уберите яркий макияж или проводите тест по фото без макияжа</li>
+                        <li>Уберите волосы от лица, чтобы видеть кожу</li>
+                        <li>Не ориентируйтесь на загар, только на естественный оттенок кожи</li>
+                        <li>Лучшее время — дневное, у окна, без прямых солнечных лучей</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Раздел 2 -->
+            <div class="instruction-section">
+                <h2 class="section-title">Как отвечать на вопросы</h2>
+                
+                <div class="do-dont">
+                    <div class="do">
+                        <h3>✅ ДЕЛАЙТЕ</h3>
+                        <ul>
+                            <li>Оценивайте при дневном свете</li>
+                            <li>Смотрите на себя объективно</li>
+                            <li>Учитывайте естественный цвет волос</li>
+                            <li>Помните про свою уникальность</li>
+                            <li>Отвечайте честно на все 15 вопросов</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="dont">
+                        <h3>❌ НЕ ДЕЛАЙТЕ</h3>
+                        <ul>
+                            <li>Не ориентируйтесь на загар</li>
+                            <li>Не проходите тест вечером</li>
+                            <li>Не используйте фильтры</li>
+                            <li>Не сравнивайте себя с другими</li>
+                            <li>Не выбирайте ответы "потому что нравится"</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Тест состоит из 15 вопросов</strong> и займет около 5-7 минут. Отвечайте на все вопросы внимательно для получения точного результата.</p>
+                </div>
+            </div>
+            
+            <!-- Раздел 3 -->
+            <div class="instruction-section">
+                <h2 class="section-title">О цветотипах</h2>
+                
+                <p>В тесте из 15 вопросов вы определите, к какому из 4 цветотипов времени года вы относитесь:</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 30px 0;">
+                    <div style="text-align: center; padding: 20px; background: #f9f9f9; border-radius: 10px;">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #FFCC80, #FF9800); border-radius: 50%; margin: 0 auto 15px;"></div>
+                        <h4 style="font-family: 'Montserrat', sans-serif; font-weight: 600;">Весна</h4>
+                        <p style="font-size: 14px;">Теплый, светлый, яркий</p>
+                    </div>
+                    
+                    <div style="text-align: center; padding: 20px; background: #f9f9f9; border-radius: 10px;">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #81D4FA, #2196F3); border-radius: 50%; margin: 0 auto 15px;"></div>
+                        <h4 style="font-family: 'Montserrat', sans-serif; font-weight: 600;">Лето</h4>
+                        <p style="font-size: 14px;">Холодный, светлый, приглушенный</p>
+                    </div>
+                    
+                    <div style="text-align: center; padding: 20px; background: #f9f9f9; border-radius: 10px;">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #A1887F, #795548); border-radius: 50%; margin: 0 auto 15px;"></div>
+                        <h4 style="font-family: 'Montserrat', sans-serif; font-weight: 600;">Осень</h4>
+                        <p style="font-size: 14px;">Теплый, насыщенный, глубокий</p>
+                    </div>
+                    
+                    <div style="text-align: center; padding: 20px; background: #f9f9f9; border-radius: 10px;">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #7986CB, #3F51B5); border-radius: 50%; margin: 0 auto 15px;"></div>
+                        <h4 style="font-family: 'Montserrat', sans-serif; font-weight: 600;">Зима</h4>
+                        <p style="font-size: 14px;">Холодный, контрастный, яркий</p>
+                    </div>
+                </div>
+                
+                <div class="tip-box">
+                    <p><strong>Важно:</strong> Цветотип — это ориентир, а не строгое правило. Многие люди имеют признаки нескольких типов. Результат теста из 15 вопросов покажет ваш доминирующий тип, но вы можете экспериментировать с цветами соседних сезонов.</p>
+                </div>
+            </div>
+            
+            <!-- Раздел 4 -->
+            <div class="instruction-section">
+                <h2 class="section-title">Частые ошибки</h2>
+                
+                <div class="tip-box">
+                    <h3>Что может исказить результат:</h3>
+                    <ul>
+                        <li><strong>Оценка по памяти</strong> вместо реального отражения</li>
+                        <li><strong>Привычка к своему отражению</strong> влияет на восприятие оттенков</li>
+                        <li><strong>Любимые цвета</strong> могут не совпадать с теми, что действительно подходят</li>
+                        <li><strong>Окрашенные волосы</strong> влияют на восприятие внешности</li>
+                        <li><strong>Искусственный свет</strong> (особенно желтый) искажает цвета</li>
+                        <li><strong>Спешка при ответах</strong> на 15 вопросов</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Кнопка -->
+            <div class="center-btn">
+                <a href="test.html" class="btn">Начать тест (15 вопросов)</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ФУТЕР -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">COLVI</div>
+                <div class="footer-links">
+                    <a href="index.html">Главная</a>
+                    <a href="test.html">Тест</a>
+                    <a href="looks.html">Образы</a>
+                    <a href="colors.html">Цвета</a>
+                    <a href="about.html">Контакты</a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 COLVI. Все права защищены.</p>
+                <p style="margin-top: 10px;">Сайт о цветотипах внешности</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Подсветка активной ссылки
+        const currentPage = window.location.pathname.split('/').pop();
+        document.querySelectorAll('nav a').forEach(link => {
+            if (link.getAttribute('href') === currentPage) {
+                link.classList.add('active');
+            }
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

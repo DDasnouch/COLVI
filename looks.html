@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="stylesheet" href="style.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Примеры образов - COLVI</title>
+    <link rel="icon" type="image/png" href="https://img.icons8.com/color/96/000000/color-palette.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --gray-light: #f5f5f5;
+            --gray-medium: #e0e0e0;
+            --gray-dark: #8a8a8a;
+            --black: #222222;
+            --white: #ffffff;
+            --pink: #ff6b8b;
+            --pink-dark: #e05573;
+            --spring: #FF9800;
+            --summer: #2196F3;
+            --autumn: #795548;
+            --winter: #3F51B5;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: var(--gray-light);
+            padding: 20px 0;
+            border-bottom: 1px solid var(--gray-medium);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 32px;
+            color: var(--black);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+        
+        nav a {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--black);
+            text-decoration: none;
+            padding: 8px 0;
+            position: relative;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--pink);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--pink);
+            transition: width 0.3s;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        nav a.active {
+            color: var(--pink);
+        }
+        
+        nav a.active::after {
+            width: 100%;
+        }
+        
+        .page-header {
+            padding: 100px 0 60px;
+            text-align: center;
+            background-color: var(--gray-light);
+        }
+        
+        .page-header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+        
+        .page-header p {
+            font-size: 18px;
+            color: var(--gray-dark);
+        }
+        
+        /* ФИЛЬТРЫ */
+        .filters {
+            padding: 40px 0;
+            background-color: var(--white);
+        }
+        
+        .filter-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .filter-tab {
+            padding: 12px 24px;
+            background-color: var(--gray-light);
+            color: var(--black);
+            border: none;
+            border-radius: 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .filter-tab:hover {
+            background-color: var(--pink);
+            color: var(--white);
+        }
+        
+        .filter-tab.active {
+            background-color: var(--pink);
+            color: var(--white);
+        }
+        
+        /* ГРИД ОБРАЗОВ */
+        .looks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            padding: 40px 0 80px;
+        }
+        
+        .look-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--gray-medium);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .look-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .look-header {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--gray-medium);
+        }
+        
+        .look-type {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .look-type.spring {
+            background-color: rgba(255, 152, 0, 0.1);
+            color: var(--spring);
+            border: 1px solid rgba(255, 152, 0, 0.2);
+        }
+        
+        .look-type.summer {
+            background-color: rgba(33, 150, 243, 0.1);
+            color: var(--summer);
+            border: 1px solid rgba(33, 150, 243, 0.2);
+        }
+        
+        .look-type.autumn {
+            background-color: rgba(121, 85, 72, 0.1);
+            color: var(--autumn);
+            border: 1px solid rgba(121, 85, 72, 0.2);
+        }
+        
+        .look-type.winter {
+            background-color: rgba(63, 81, 181, 0.1);
+            color: var(--winter);
+            border: 1px solid rgba(63, 81, 181, 0.2);
+        }
+        
+        .look-occasion {
+            font-size: 12px;
+            color: var(--gray-dark);
+        }
+        
+        .look-preview {
+            height: 200px;
+            background-color: var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 20px;
+            color: var(--white);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        .look-preview.spring { background: linear-gradient(135deg, #FFCC80, #FF9800); }
+        .look-preview.summer { background: linear-gradient(135deg, #81D4FA, #2196F3); }
+        .look-preview.autumn { background: linear-gradient(135deg, #A1887F, #795548); }
+        .look-preview.winter { background: linear-gradient(135deg, #7986CB, #3F51B5); }
+        
+        .look-content {
+            padding: 25px;
+        }
+        
+        .look-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--black);
+        }
+        
+        .look-description {
+            color: var(--gray-dark);
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        .look-colors {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .look-color {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid var(--white);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .look-items {
+            margin-top: 20px;
+        }
+        
+        .look-items h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: var(--black);
+        }
+        
+        .look-items ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .look-items li {
+            padding: 6px 0;
+            font-size: 14px;
+            color: var(--gray-dark);
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .look-items li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--pink);
+            font-weight: bold;
+        }
+        
+        .look-tip {
+            background-color: rgba(255, 107, 139, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--gray-dark);
+            border-left: 3px solid var(--pink);
+        }
+        
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray-dark);
+        }
+        
+        .empty-state h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: var(--black);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--pink);
+            color: var(--white);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        
+        .btn:hover {
+            background-color: var(--pink-dark);
+            transform: translateY(-2px);
+        }
+        
+        footer {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 28px;
+            text-transform: uppercase;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--pink);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            color: var(--gray-dark);
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .looks-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .filter-tab {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+                text-align: center;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ШАПКА -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">COLVI</div>
+                <nav>
+                    <a href="index.html">Главная</a>
+                    <a href="test-instructions.html">Перед тестом</a>
+                    <a href="test.html">Тест</a>
+                    <a href="colors.html">Цвета</a>
+                    <a href="looks.html" class="active">Образы</a>
+                    <a href="about.html">О нас</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- ЗАГОЛОВОК -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Примеры образов</h1>
+            <p>Готовые луки для каждого цветотипа и случая</p>
+        </div>
+    </section>
+
+    <!-- ФИЛЬТРЫ -->
+    <section class="filters">
+        <div class="container">
+            <h2 style="text-align: center; font-family: 'Montserrat', sans-serif; font-weight: 600; margin-bottom: 20px;">
+                Выберите тип или случай:
+            </h2>
+            <div class="filter-tabs">
+                <button class="filter-tab active" data-filter="all">Все образы</button>
+                <button class="filter-tab" data-filter="spring">Для Весны</button>
+                <button class="filter-tab" data-filter="summer">Для Лета</button>
+                <button class="filter-tab" data-filter="autumn">Для Осени</button>
+                <button class="filter-tab" data-filter="winter">Для Зимы</button>
+                <button class="filter-tab" data-filter="casual">Повседневные</button>
+                <button class="filter-tab" data-filter="office">Офисные</button>
+                <button class="filter-tab" data-filter="evening">Вечерние</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ГРИД ОБРАЗОВ -->
+    <div class="container">
+        <div class="looks-grid" id="looksGrid">
+            <!-- Образ 1 -->
+            <div class="look-card spring casual" data-categories="spring casual">
+                <div class="look-header">
+                    <span class="look-type spring">Весна</span>
+                    <span class="look-occasion">Повседневный</span>
+                </div>
+                <div class="look-preview spring">
+                    СВЕЖИЙ ДЕНЬ
+                </div>
+                <div class="look-content">
+                    <h3 class="look-title">Весенняя прогулка</h3>
+                    <p class="look-description">Идеально для прогулок и встреч с друзьями</p>
+                    
+                    <div class="look-colors">
+                        <div class="look-color" style="background-color: #FFCC80;"></div>
+                        <div class="look-color" style="background-color: #81C784;"></div>
+                        <div class="look-color" style="background-color: #FFF9C4;"></div>
+                    </div>
+                    
+                    <div class="look-items">
+                        <h4>Составляющие образа:</h4>
+                        <ul>
+                            <li>Персиковая блузка из хлопка</li>
+                            <li>Светлые джинсы скинни</li>
+                            <li>Бежевая джинсовая куртка</li>
+                            <li>Кожаные лоферы бежевого цвета</li>
+                            <li>Золотые серьги-кольца</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="look-tip">
+                        Добавьте плетеную сумку-корзинку для завершения образа
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Образ 2 -->
+            <div class="look-card summer office" data-categories="summer office">
+                <div class="look-header">
+                    <span class="look-type summer">Лето</span>
+                    <span class="look-occasion">Офисный</span>
+                </div>
+                <div class="look-preview summer">
+                    ЭЛЕГАНТНО
+                </div>
+                <div class="look-content">
+                    <h3 class="look-title">Деловой стиль</h3>
+                    <p class="look-description">Строгий, но женственный образ для работы</p>
+                    
+                    <div class="look-colors">
+                        <div class="look-color" style="background-color: #81D4FA;"></div>
+                        <div class="look-color" style="background-color: #ECEFF1;"></div>
+                        <div class="look-color" style="background-color: #546E7A;"></div>
+                    </div>
+                    
+                    <div class="look-items">
+                        <h4>Составляющие образа:</h4>
+                        <ul>
+                            <li>Голубая шелковая блуза</li>
+                            <li>Серые брюки-сигареты</li>
+                            <li>Бежевый шерстяной пиджак</li>
+                            <li>Балетки телесного цвета</li>
+                            <li>Серебряные часы на кожаном ремешке</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="look-tip">
+                        Структурированная сумка-тоут дополнит деловой образ
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Образ 3 -->
+            <div class="look-card autumn casual" data-categories="autumn casual">
+                <div class="look-header">
+                    <span class="look-type autumn">Осень</span>
+                    <span class="look-occasion">Повседневный</span>
+                </div>
+                <div class="look-preview autumn">
+                    УЮТНО
+                </div>
+                <div class="look-content">
+                    <h3 class="look-title">Осенний комфорт</h3>
+                    <p class="look-description">Тепло и комфорт для прохладных дней</p>
+                    
+                    <div class="look-colors">
+                        <div class="look-color" style="background-color: #8D6E63;"></div>
+                        <div class="look-color" style="background-color: #8BC34A;"></div>
+                        <div class="look-color" style="background-color: #FFF3E0;"></div>
+                    </div>
+                    
+                    <div class="look-items">
+                        <h4>Составляющие образа:</h4>
+                        <ul>
+                            <li>Горчичный кашемировый свитер</li>
+                            <li>Коричневые кожаные брюки</li>
+                            <li>Оливковая куртка-бомбер</li>
+                            <li>Черные ботильоны на низком каблуке</li>
+                            <li>Шерстяная шапка песочного цвета</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="look-tip">
+                        Кожаный рюкзак среднего размера завершит образ
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Образ 4 -->
+            <div class="look-card winter evening" data-categories="winter evening">
+                <div class="look-header">
+                    <span class="look-type winter">Зима</span>
+                    <span class="look-occasion">Вечерний</span>
+                </div>
+                <div class="look-preview winter">
+                    ЭФФЕКТНО
+                </div>
+                <div class="look-content">
+                    <h3 class="look-title">Вечерний выход</h3>
+                    <p class="look-description">Яркий и запоминающийся образ для особого случая</p>
+                    
+                    <div class="look-colors">
+                        <div class="look-color" style="background-color: #3F51B5;"></div>
+                        <div class="look-color" style="background-color: #000000;"></div>
+                        <div class="look-color" style="background-color: #F06292;"></div>
+                    </div>
+                    
+                    <div class="look-items">
+                        <h4>Составляющие образа:</h4>
+                        <ul>
+                            <li>Черное платье-футляр миди</li>
+                            <li>Синий шелковый шарф с принтом</li>
+                            <li>Черные туфли-лодочки на каблуке</li>
+                            <li>Клатч с серебряной фурнитурой</li>
+                            <li>Серебряные серьги-подвески</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="look-tip">
+                        Яркая помада оттенка фуксия подчеркнет образ
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Образ 5 -->
+            <div class="look-card spring office" data-categories="spring office">
+                <div class="look-header">
+                    <span class="look-type spring">Весна</span>
+                    <span class="look-occasion">Офисный</span>
+                </div>
+                <div class="look-preview spring">
+                    ДЕЛОВОЙ
+                </div>
+                <div class="look-content">
+                    <h3 class="look-title">Весна в офисе</h3>
+                    <p class="look-description">Профессиональный, но не скучный образ</p>
+                    
+                    <div class="look-colors">
+                        <div class="look-color" style="background-color: #FFF9C4;"></div>
+                        <div class="look-color" style="background-color: #A5D6A7;"></div>
+                        <div class="look-color" style="background-color: #FFECB3;"></div>
+                    </div>
+                    
+                    <div class="look-items">
+                        <h4>Составляющие образа:</h4>
+                        <ul>
+                            <li>Желтое платье-футляр</li>
+                            <li>Бежевый тренч</li>
+                            <li>Туфли-лодочки на среднем каблуке</li>
+                            <li>Золотые минималистичные серьги</li>
+                            <li>Кожаный портфель</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="look-tip">
+                        Классические часы добавят элегантности
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Образ 6 -->
+            <div class="look-card summer casual" data-categories="summer casual">
+                <div class="look-header">
+                    <span class="look-type summer">Лето</span>
+                    <span class="look-occasion">Повседневный</span>
+                </div>
+                <div class="look-preview summer">
+                    ЛЕТНИЙ
+                </div>
+                <div class="look-content">
+                    <h3 class="look-title">Летняя легкость</h3>
+                    <p class="look-description">Легкость и комфорт для жарких дней</p>
+                    
+                    <div class="look-colors">
+                        <div class="look-color" style="background-color: #4FC3F7;"></div>
+                        <div class="look-color" style="background-color: #F48FB1;"></div>
+                        <div class="look-color" style="background-color: #80CBC4;"></div>
+                    </div>
+                    
+                    <div class="look-items">
+                        <h4>Составляющие образа:</h4>
+                        <ul>
+                            <li>Белое хлопковое платье макси</li>
+                            <li>Джинсовая жилетка</li>
+                            <li>Сандали из натуральной кожи</li>
+                            <li>Плетеная шляпа с широкими полями</li>
+                            <li>Солнцезащитные очки</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="look-tip">
+                        Пляжная сумка из холщовой ткани завершит образ
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ФУТЕР -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">COLVI</div>
+                <div class="footer-links">
+                    <a href="index.html">Главная</a>
+                    <a href="test.html">Тест</a>
+                    <a href="looks.html">Образы</a>
+                    <a href="colors.html">Цвета</a>
+                    <a href="about.html">Контакты</a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 COLVI. Все права защищены.</p>
+                <p style="margin-top: 10px;">Сайт о цветотипах внешности</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ФИЛЬТРАЦИЯ ОБРАЗОВ
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterTabs = document.querySelectorAll('.filter-tab');
+            const lookCards = document.querySelectorAll('.look-card');
+            
+            // Изначально показываем все карточки
+            lookCards.forEach(card => {
+                card.style.display = 'block';
+                card.style.opacity = '1';
+                card.style.transition = 'opacity 0.3s';
+            });
+            
+            // Обработка кликов по фильтрам
+            filterTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Убираем активный класс у всех вкладок
+                    filterTabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Добавляем активный класс текущей вкладке
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Фильтрация карточек
+                    lookCards.forEach(card => {
+                        const categories = card.getAttribute('data-categories');
+                        
+                        if (filter === 'all' || categories.includes(filter)) {
+                            card.style.display = 'block';
+                            setTimeout(() => {
+                                card.style.opacity = '1';
+                            }, 10);
+                        } else {
+                            card.style.opacity = '0';
+                            setTimeout(() => {
+                                card.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+            
+            // Анимация появления карточек при скролле
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            lookCards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s, transform 0.5s';
+                observer.observe(card);
+            });
+            
+            // Подсветка активной ссылки
+            const currentPage = window.location.pathname.split('/').pop();
+            document.querySelectorAll('nav a').forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
